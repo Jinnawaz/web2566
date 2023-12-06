@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>   
+
+    <title>Work1: Jquery + Boostrap 643020596-9</title>
+    <style>
+        #view2 .col {
+          padding: 2px;
+        }
+        #view2 .col img {
+          width:100%;
+        }
+    </style>
+  </head>
+  <body>
+    <div id='view1' class='text-center p-5'>
+        <button type="button" class="btn btn-primary">เริ่มเล่นเกม</button>
+    </div>
+    <button type="button" id='playBtn' class="btn btn-primary">เริ่มเล่นเกม</button>
+    <button type="button" id='stopBtn' class="btn btn-primary">เลิกเล่น</button>
+    <div id='view2' class='container p-5'>
+        <div class="row">
+          <div class="col"><img src="./quest.jpg" id="img12" state="0" srcx="12.jpg"></div>
+          <div class="col"><img src="./quest.jpg" id="img1" state="0" srcx="1.jpg"></div>
+          <div class="col"><img src="./quest.jpg" id="img3" state="0" srcx="3.jpg"></div>
+          <div class="col"><img src="./quest.jpg" id="img4" state="0" srcx="4.jpg"></div>
+        </div>
+        <div class="row">
+            <div class="col"><img src="./quest.jpg" id="img2" state="0" srcx="2.jpg"></div>
+            <div class="col"><img src="./quest.jpg" id="img7" state="0" srcx="7.jpg"></div>
+            <div class="col"><img src="./quest.jpg" id="img6" state="0" srcx="6.jpg"></div>
+            <div class="col"><img src="./quest.jpg" id="img16" state="0" srcx="16.jpg"></div>
+          </div>
+          <div class="row">
+            <div class="col"><img src="./quest.jpg" id="img5" state="0" srcx="5.jpg"></div>
+            <div class="col"><img src="./quest.jpg" id="img10" state="0" srcx="10.jpg"></div>
+            <div class="col"><img src="./quest.jpg" id="img15" state="0" srcx="15.jpg"></div>
+            <div class="col"><img src="./quest.jpg" id="img11" state="0" srcx="11.jpg"></div>
+          </div>
+          <div class="row">
+            <div class="col"><img src="./quest.jpg" id="img8" state="0" srcx="8.jpg"></div>
+            <div class="col"><img src="./quest.jpg" id="img13" state="0" srcx="13.jpg"></div>
+            <div class="col"><img src="./quest.jpg" id="img14" state="0" srcx="14.jpg"></div>
+            <div class="col"><img src="./quest.jpg" id="img9" state="0" srcx="9.jpg"></div>
+          </div>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+  <script>
+    $(function (){
+        $("#view2").hide();
+        $("#playBtn").click(startGame);
+        $("#stopBtn").click(stopGame);
+    });
+    function startGame(){
+        $("#view2").show();
+        $("#view1").hide();
+    }
+    function stopGame(){
+        $("#view2").hide();
+        $("#view1").show();
+    }
+    function shuffle(){
+        var list=[];
+        list[0]=0;
+        for (var i = 1; i <= 8; i++) {
+          list.push(i);
+          list.push(i);
+        }
+       // console.log(list);
+        for(var i=1;i<100;i++){
+          var a=1+Math.round(Math.random()*15);
+          var b=1+Math.round(Math.random()*15);
+          var t=list[a];
+          list[a]=list[b];
+          list[b]=t;
+        }
+        $("#view2 img").attr("src","quest.jpg")
+                       .attr("state",0);
+        for (var i = 1; i <= 16; i++) {
+           $("#img"+i).attr("srcx",""+list[i]+".jpg");
+        }
+      }
+
+      function startGame(){  
+        shuffle();
+        open_count=0;
+        all_card=16;    
+        $("#view2").show();
+        $("#view1").hide();
+    } 
+
+
+    $(function (){
+        $("#view2").hide();  
+        $("#playBtn").click(startGame);      
+        $("#stopBtn").click(stopGame);
+        $("#view2 img").click(imgClick);   
+      });
+     function imgClick(){
+        var s=$(this).attr("srcx");
+        $(this).attr("src", s);
+        $(this).attr("state",1);
+     }
+
+
+    var open_count=0;
+    var open_card1=0;
+    var open_card2=0;
+    var all_card=16;
+      function imgClick(){
+       //console.log(this);
+        open_count++;
+        var s=$(this).attr("srcx");
+        if(open_count==1)open_card1=s;
+        if(open_count==2)open_card2=s;
+        $(this).attr("src", s);
+        $(this).attr("state",1);
+        if(open_count==2){
+          if(open_card1==open_card2){
+            all_card-=2;
+            $("[state=1]").hide().attr("state",2);
+          }else{
+            $("[state=1]").attr("state",0).attr("src","quest.jpg");
+          }
+          open_count=0;
+          open_card2="";
+          open_card1="";
+        }
+      }
+
+      var open_count=0;
+      var open_card1=0;
+      var open_card2=0;
+      var all_card=16;
+      function imgClick(){
+       //console.log(this);
+        if($(this).attr("state")!=0) return;
+        if(open_count>=2) return;
+        open_count++;
+        var s=$(this).attr("srcx");
+        if(open_count==1)open_card1=s;
+        if(open_count==2)open_card2=s;
+        $(this).hide().attr("src", s).slideDown(500);
+        $(this).attr("state",1);
+        if(open_count==2){
+           setTimeout(()=>{
+            if(open_card1==open_card2){
+            all_card-=2;
+            $("[state=1]").fadeOut(1000).attr("state",2);
+          }else{
+            $("[state=1]").attr("state",0).attr("src","quest.jpg");
+          }
+          open_count=0;
+          open_card2="";
+          open_card1="";
+
+
+           },2000)          
+        }
+      }
+
+  </script>
+</html>
