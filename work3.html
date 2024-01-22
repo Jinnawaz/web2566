@@ -17,7 +17,7 @@
             </template>
             <template v-if="state==1">
               <v-row>
-                <v-col v-for="(c,i) of cards" cols="3" class='text-center'>
+                <v-col v-for="(c,i) of cards" cols="2" class='text-center'>
                   <img
                   v-if="c.s==0"
                   src="work1/quest.jpg"
@@ -65,8 +65,8 @@
           this.state = 1;
           this.cards = [];
           this.cards_opened = [];
-          this.cards_count = 16;
-          for (var i = 1; i <= 8; i++) {
+          this.cards_count = 32;
+          for (var i = 1; i <= 18; i++) {
             this.cards.push({ t: i, s: 0 });
             this.cards.push({ t: i, s: 0 });
           }
